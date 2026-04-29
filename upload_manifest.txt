@@ -1,0 +1,34 @@
+=== CLOUDFLARE UPLOAD MANIFEST ===
+Generated: 2026-04-28
+
+ROOT FILES:
+- index.html ✅
+
+IMAGES (Hauptdatei):
+- mama-maracuja.png ✅
+- lowlow-logo.png ✅
+- funtasticflorida.png ✅
+- bild1.jpg ✅
+- melisa-popanicic-COYz3xEfOdI-unsplash.jpg ✅
+- silas-baisch-XU6YMH8zVFg-unsplash.jpg ✅
+- negley-stockman-GYea2Dx6nKg-unsplash.jpg ✅
+- pedro-monteiro-HfIex7qwTlI-unsplash.jpg ✅
+
+SPORTS/ACTION MASONRY:
+- brian-spurr-kwU2ntHvbfI-unsplash.jpg ✅
+- nils9three-ski-6947984_1920.jpg ✅
+- jon-matthews-bda9rbqUNZQ-unsplash.jpg ✅
+- lisha-riabinina-stj-A6E6II8-unsplash.jpg ✅
+- pexels-matteo-sarri-2152532088-32451903.jpg ✅
+- pexels-pavel-danilyuk-8985594.jpg ✅
+- jared-rice-NTyBbu66_SI-unsplash.jpg ✅
+- pexels-riccardo-vespa-594469796-17284183.jpg ✅
+- pexels-tudor-sorin-2003800090-29042027.jpg ✅
+- pexels-jordicosta-32658879.jpg ✅
+- pexels-jess-vide-4612307.jpg ✅
+- melisa-popanicic-COYz3xEfOdI-unsplash.jpg ✅
+
+MARKBEGLEITER FOLDER (17 images):
+- Markbegleiter/*.png ✅
+
+TOTAL: 40+ image files

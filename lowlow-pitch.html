@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOWLOW Kombucha - Pitch Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00D9FF;
+            --secondary: #FF6B35;
+            --accent: #FFD60A;
+            --dark: #0A0E27;
+            --light: #F5F5F5;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary) 0%, #0099CC 100%);
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: -80px;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 214, 10, 0.1);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            color: white;
+        }
+
+        .hero-tag {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .logo {
+            max-width: 500px;
+            height: auto;
+            margin: 0 auto 2rem;
+            animation: slideUp 0.8s ease-out 0.1s both;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            animation: slideUp 0.8s ease-out 0.1s both;
+            display: none;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: slideUp 0.8s ease-out 0.3s both;
+        }
+
+        .cta-button:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ===== VIDEO SECTION (Placeholder) ===== */
+        .video-hero {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1f3a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+
+        .video-hero video,
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-placeholder {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(255, 107, 53, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .play-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        /* ===== MARKET OVERVIEW ===== */
+        .market-overview {
+            background: linear-gradient(180deg, #f9f9f9 0%, white 100%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-card:nth-child(2) {
+            border-left-color: var(--secondary);
+        }
+
+        .stat-card:nth-child(2) .stat-number {
+            color: var(--primary);
+        }
+
+        .stat-card:nth-child(3) {
+            border-left-color: var(--accent);
+        }
+
+        .stat-card:nth-child(3) .stat-number {
+            color: var(--accent);
+        }
+
+        /* ===== PRODUCT SECTION ===== */
+        .product-section {
+            background: white;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .product-image {
+            position: relative;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image::before {
+            content: '🍶';
+            font-size: 150px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50% 0 0 100%;
+        }
+
+        .product-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .product-info p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .feature-list li {
+            padding: 0.8rem 0;
+            padding-left: 2rem;
+            position: relative;
+            font-weight: 500;
+        }
+
+        .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: 900;
+            font-size: 1.3rem;
+        }
+
+        /* ===== OPPORTUNITY SECTION ===== */
+        .opportunity {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1f3a 100%);
+            color: white;
+        }
+
+        .opportunity .section-title {
+            color: var(--primary);
+            background: none;
+            -webkit-text-fill-color: unset;
+        }
+
+        .opportunity .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .opportunity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .opportunity-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .opportunity-card:hover {
+            border-color: var(--secondary);
+            background: rgba(255, 107, 53, 0.05);
+        }
+
+        .opportunity-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .opportunity-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+            padding: 6rem 2rem;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta-button-white {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: white;
+            color: var(--secondary);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-image {
+                height: 350px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-tag">🌊 Kombucha Für Deutschland</div>
+            <img src="lowlow-logo.png" alt="LOWLOW Kombucha Logo" class="logo">
+            <p>Echte Fermentation. Echte Qualität. Echte Energie für den deutschen Off-Trade Markt.</p>
+            <button class="cta-button">Chancen Erkunden</button>
+        </div>
+    </section>
+
+    <!-- VIDEO HERO (Placeholder für dein Video) -->
+    <section class="video-hero">
+        <!-- HIER KOMMT DEIN VIDEO: Surfer, Kühlbox, Trinken -->
+        <div class="video-placeholder">
+            <div class="play-icon">▶</div>
+            <div>Surfer. Energie. LOWLOW.</div>
+        </div>
+    </section>
+
+    <!-- MARKET OVERVIEW -->
+    <section class="market-overview">
+        <h2 class="section-title">Der Markt Explodiert</h2>
+        <p class="section-subtitle">
+            Kombucha ist nicht mehr Nische – es ist ein Mega-Trend mit massivem Wachstumspotenzial.
+            Wer jetzt einsteigt, gewinnt. Wer wartet, verliert.
+        </p>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">$2.4B</div>
+                <div class="stat-label">Global 2024</div>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">Marktvolumen weltweit</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">19.4%</div>
+                <div class="stat-label">Jährliches Wachstum</div>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">CAGR bis 2031</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">USA #1</div>
+                <div class="stat-label">Reifer Markt</div>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">$1.62B + 13.7% Growth</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">€904M</div>
+                <div class="stat-label">Europa 2024</div>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">Schnell wachsend, UK leader</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">NOCH LEER</div>
+                <div class="stat-label">Deutschland</div>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">White Space für First Mover</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15.3%</div>
+                <div class="stat-label">Off-Trade Growth</div>
+                <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">Dein Channel wächst schneller</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT SECTION -->
+    <section class="product-section">
+        <h2 class="section-title">Das Produkt</h2>
+        <p class="section-subtitle">
+            Höchste Qualität. Echte Fermentation. Glasflasche. Wie Synergy – aber deutsch, authentisch und dafür gemacht.
+        </p>
+
+        <div class="product-grid">
+            <div class="product-image"></div>
+            <div class="product-info">
+                <h3>Glas. Rein. LOWLOW.</h3>
+                <p>
+                    Wir machen das, was Synergy in den USA perfekt gemacht hat:
+                    Echte Kombucha mit echten Probiotika, Glasflasche,
+                    Premium-Qualität – jetzt für Deutschland.
+                </p>
+                <ul class="feature-list">
+                    <li>Echte Gärung mit SCOBY</li>
+                    <li>Probiotika für Darmgesundheit</li>
+                    <li>Nachhaltige Glasflasche</li>
+                    <li>Minimal zugesetzter Zucker</li>
+                    <li>Natürliche Aromen, kein Schnickschnack</li>
+                    <li>Deutsche Herstellung & Qualität</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- OPPORTUNITY SECTION -->
+    <section class="opportunity">
+        <h2 class="section-title">Warum JETZT?</h2>
+        <p class="section-subtitle">
+            Der Markt reift. Synergy hat bewiesen: Es funktioniert. Deutschland ist noch völlig unterpenetrant.
+            Das ist die Chance des Jahrzehnts.
+        </p>
+
+        <div class="opportunity-grid">
+            <div class="opportunity-card">
+                <h4>📈 Markt Explodiert</h4>
+                <p>USA: +13.7% CAGR. Europa: Emergent. Deutschland: Just Getting Started.
+                   Wir sind am Anfang einer Welle.</p>
+            </div>
+            <div class="opportunity-card">
+                <h4>🏪 Off-Trade ist KING</h4>
+                <p>Retail (+15% Growth) ist der Mega-Channel. Weg vom Café-Hype, hin zu Home-Konsum.
+                   Das ist wo Geld gemacht wird.</p>
+            </div>
+            <div class="opportunity-card">
+                <h4>🌍 Gesundheit treibt es</h4>
+                <p>65% junge Verbraucher wählen fermentierte Getränke für Darmgesundheit.
+                   Das ist ein Megatrend, nicht ein Trend.</p>
+            </div>
+            <div class="opportunity-card">
+                <h4>🚀 First-Mover Vorteil</h4>
+                <p>Keiner hat LOWLOW-Qualität für Deutschland. Wer jetzt einsteigt, dominiert die Kategorie
+                   für die nächsten 5 Jahre.</p>
+            </div>
+            <div class="opportunity-card">
+                <h4>💰 Margins sind fett</h4>
+                <p>Premium-Getränk = Premium-Margen. Synergy macht es vor.
+                   Skala rechnet sich schnell bei Kombucha.</p>
+            </div>
+            <div class="opportunity-card">
+                <h4>🎯 Deine Distribution</h4>
+                <p>Du kennst den Markt. Du hast Kanäle. Wir bringen Produkt + Brand.
+                   Das ist ein Match Made in Heaven.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <h2>Bereit Für Etwas Großes?</h2>
+        <p>LOWLOW ist nicht einfach ein Produkt – es ist die Zukunft des deutschen Getränkemarkts.</p>
+        <button class="cta-button-white">Jetzt Investieren</button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <img src="lowlow-logo.png" alt="LOWLOW Kombucha" style="max-width: 120px; margin-bottom: 1rem; opacity: 0.8;">
+        <p>&copy; 2024 LOWLOW Kombucha. Made for Germany. 🌊</p>
+    </footer>
+
+    <script>
+        // Smooth scroll für Buttons
+        document.querySelectorAll('a[href^="#"], button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.getAttribute('href')?.startsWith('#')) {
+                    event.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    target?.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Intersection Observer für Animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>

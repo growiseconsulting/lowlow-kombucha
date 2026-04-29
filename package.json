@@ -1,0 +1,16 @@
+{
+  "name": "lowlow-kombucha",
+  "version": "1.0.0",
+  "description": "lowlow Kombucha Pitch Website",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "vercel build",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.11"
+  },
+  "devDependencies": {
+    "vercel": "latest"
+  }
+}

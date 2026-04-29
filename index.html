@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOWLOW Kombucha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cyan: #00D9FF;
+            --magenta: #FF1493;
+            --orange: #FF6B35;
+            --yellow: #FFD60A;
+            --dark: #0A0E27;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HERO - NO HEADER */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-image: url('mama-maracuja.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .logo-hero {
+            max-width: 700px;
+            width: 90%;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease-out 0.2s both;
+            max-width: 1000px;
+            padding: 0 2rem;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 2;
+            display: none;
+        }
+
+        .hero h1 span {
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF1493 0%, var(--orange) 50%, var(--yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 1.8;
+            animation: fadeIn 1.2s ease-out 0.4s both;
+            max-width: 700px;
+            padding: 0 2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            color: white;
+            text-align: justify;
+            margin: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* FULL BLEED SECTIONS */
+        .fullbleed {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .fullbleed::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .fullbleed-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            max-width: 800px;
+            padding: 3rem;
+        }
+
+        .fullbleed h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .fullbleed p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-weight: 300;
+            text-align: justify;
+        }
+
+        /* CONTENT BLOCKS - NO CORNERS */
+        .content-block {
+            width: 100%;
+            padding: 6rem 3rem;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .block-content {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .block-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            letter-spacing: -1px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--cyan), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .block-title .highlight {
+            background: linear-gradient(135deg, var(--cyan), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .block-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            text-align: justify;
+        }
+
+        /* STATS GRID - MINIMAL */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .stat {
+            padding: 2.5rem 2rem;
+            background: white;
+            border-left: 4px solid var(--cyan);
+        }
+
+        .stat:nth-child(2) {
+            border-left-color: var(--orange);
+        }
+
+        .stat:nth-child(3) {
+            border-left-color: var(--yellow);
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat:nth-child(2) .stat-number {
+            color: var(--orange);
+        }
+
+        .stat:nth-child(3) .stat-number {
+            color: var(--yellow);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-desc {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        /* CHARTS */
+        .chart-block {
+            margin-top: 3.5rem;
+            padding: 2.5rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.03) 0%, rgba(255, 107, 53, 0.02) 100%);
+            border-left: 5px solid var(--cyan);
+        }
+
+        .chart-block:nth-child(2) {
+            border-left-color: var(--orange);
+        }
+
+        .chart-block:nth-child(3) {
+            border-left-color: var(--yellow);
+        }
+
+        .chart-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 2.5rem;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .chart-title svg {
+            flex-shrink: 0;
+        }
+
+        .chart-block p {
+            font-size: 1.6rem !important;
+            color: #888 !important;
+            margin-top: 1.5rem !important;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            opacity: 0.85;
+            text-align: justify !important;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 500px;
+        }
+
+        /* MASONRY GRID - MIXED SIZES */
+        .masonry-grid {
+            width: 100%;
+            background: white;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-auto-rows: 220px;
+            gap: 0.8rem;
+        }
+
+        .masonry-item {
+            overflow: hidden;
+            background: #f0f0f0;
+            position: relative;
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .masonry-item:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Interessante Größen-Variation */
+        .masonry-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+        .masonry-item:nth-child(3) { grid-column: span 1; grid-row: span 2; }
+        .masonry-item:nth-child(5) { grid-column: span 2; grid-row: span 1; }
+        .masonry-item:nth-child(7) { grid-column: span 2; grid-row: span 2; }
+        .masonry-item:nth-child(9) { grid-column: span 1; grid-row: span 2; }
+        .masonry-item:nth-child(11) { grid-column: span 2; grid-row: span 1; }
+        .masonry-item:nth-child(13) { grid-column: span 2; grid-row: span 2; }
+        .masonry-item:nth-child(15) { grid-column: span 1; grid-row: span 2; }
+        .masonry-item:nth-child(17) { grid-column: span 2; grid-row: span 1; }
+
+        @media (max-width: 1024px) {
+            .masonry-grid {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: 160px;
+            }
+
+            .masonry-item:nth-child(2),
+            .masonry-item:nth-child(5),
+            .masonry-item:nth-child(8) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .masonry-grid {
+                grid-template-columns: 1fr;
+                grid-auto-rows: 250px;
+                gap: 1rem;
+                padding: 3rem 1.5rem;
+            }
+
+            .masonry-item:nth-child(1),
+            .masonry-item:nth-child(4),
+            .masonry-item:nth-child(7),
+            .masonry-item:nth-child(10) {
+                grid-column: span 1 !important;
+                grid-row: span 1 !important;
+            }
+        }
+
+        /* OPPORTUNITY SECTION */
+        .opportunity {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1f3a 100%);
+            color: white;
+        }
+
+        .opportunity .block-title {
+            color: var(--cyan);
+        }
+
+        .opp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .opp-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--cyan);
+        }
+
+        .opp-card:nth-child(2) {
+            border-left-color: var(--orange);
+        }
+
+        .opp-card:nth-child(3) {
+            border-left-color: var(--yellow);
+        }
+
+        .opp-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--cyan);
+        }
+
+        .opp-card p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            font-size: 1.2rem;
+            text-align: justify;
+        }
+
+        /* FINAL CTA SECTION */
+        .final-cta {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--orange) 100%);
+            color: white;
+            padding: 8rem 3rem;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        .cta-white {
+            padding: 1.3rem 3.5rem;
+            background: white;
+            color: var(--orange);
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-white:hover {
+            transform: translateY(-3px);
+        }
+
+        /* LOGO ACCENT */
+        .logo-block {
+            width: 100%;
+            padding: 4rem 3rem;
+            background: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-medium {
+            max-width: 300px;
+            height: auto;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVE */
+@media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .fullbleed {
+                background-attachment: scroll;
+            }
+
+            .fullbleed h2 {
+                font-size: 2.2rem;
+            }
+
+            .fullbleed p {
+                font-size: 1.2rem;
+            }
+
+            .content-block {
+                padding: 3rem 1.5rem;
+            }
+
+            .block-title {
+                font-size: 2.2rem;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+                padding: 2rem 0;
+            }
+
+            .grid-img {
+                min-height: 300px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+        }
+        /* LOGIN MODAL */
+        #loginModal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1f3a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .login-container {
+            background: white;
+            padding: 4rem 3rem;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .login-container h2 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .login-container p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--cyan);
+        }
+
+        .btn-login {
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--orange) 100%);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+        }
+
+        .code-input { display: none; }
+        .code-input.active { display: block; }
+
+        .message {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+
+        .success {
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOGIN MODAL -->
+    <div id="loginModal">
+        <div class="login-container">
+            <h2>lowlow <span style="background: linear-gradient(135deg, var(--cyan), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Access</span></h2>
+            <p>Gib deine Email ein um auf die Pitch-Website zu zugreifen</p>
+
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="deine@email.com" required>
+                </div>
+
+                <div class="form-group code-input" id="codeGroup">
+                    <label for="code">Verifizierungscode</label>
+                    <input type="text" id="code" placeholder="Code eingeben">
+                    <p class="message" id="codeMessage">Code wurde an deine Email gesendet ✅</p>
+                </div>
+
+                <button class="btn-login" id="emailBtn" onclick="sendCode()">Code anfordern</button>
+                <button class="btn-login" id="codeBtn" style="display: none;" onclick="verifyCode()">Verifizieren & Eintreten</button>
+
+                <p class="message" id="statusMessage"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO WITH LOGO -->
+    <section class="hero">
+        <img src="mama-maracuja.png" alt="lowlow Kombucha" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;">
+        <img src="lowlowlogo.png" alt="lowlow Logo" style="position: absolute; top: 2rem; left: 2rem; z-index: 3; max-width: 300px; height: auto;">
+        <h1><span>born from nature.</span><br>built for life.</h1>
+    </section>
+
+    <!-- HERO TEXT SECTION -->
+    <section style="width: 100%; padding: 4rem 3rem; background: white;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h2 style="font-size: 2.2rem; font-weight: 900; color: var(--dark); margin-bottom: 2rem; letter-spacing: -0.5px;">Was ist <span class="highlight">Kombucha</span>?</h2>
+            <p style="margin: 0; font-size: 1.2rem; line-height: 1.8; color: #555; text-align: justify;">Kombucha ist eines der ältesten fermentierten Getränke der Welt und reich an Probiotika und Enzymen, die deinen Körper unterstützen können. lowlow bringt diese alte Weisheit in die Moderne – echt, roh und ungefiltert. Besser für dich: natürlich fermentiert, lebendig und erfrischend – eine bewusste Alternative zu klassischen Softdrinks. Mit mehr als 100 Millionen aktiven Kulturen und einem natürlichen probiotischen Komplex bringt lowlow lebendige Kulturen ins Glas. Denn weniger ist mehr: weniger künstlich, weniger schwer, weniger überladen – dafür mehr Natürlichkeit, mehr Frische und mehr echtes Getränk.</p>
+        </div>
+    </section>
+
+    <!-- SURFBRETT IMAGE -->
+    <section style="width: 100%; height: 500px; background-image: url('bild1.jpg'); background-size: cover; background-position: center; background-attachment: fixed;"></section>
+
+    <!-- CONTENT BLOCK - INSIGHT -->
+    <section class="content-block">
+        <div class="block-content">
+            <h2 class="block-title">Warum <span class="highlight">jetzt?</span></h2>
+            <p class="block-subtitle">
+                Die USA haben gezeigt, wie groß Kombucha werden kann. Aus fermentiertem Tee wurde dort eine Milliarden-Kategorie. Europa zieht nach — aber Deutschland ist noch nicht emotional besetzt. Der Markt ist da, die Sehnsucht ist da, nur die Marke fehlt. lowlow schließt genau diese Lücke: Kombucha ohne Gesundheitsdogma, ohne Bio-Regal-Schwere, ohne erhobenen Zeigefinger. Stattdessen: Sommer, Surf-Vibe, echter Geschmack und eine neue alkoholfreie Alternative für den Alltag. Wer jetzt einsteigt, steigt nicht in ein fertiges Segment ein — sondern in den Moment, in dem die Kategorie gemacht wird.
+            </p>
+        </div>
+    </section>
+
+    <!-- KOMBUCHA BRANDS MASONRY -->
+    <section style="width: 100%; padding: 6rem 3rem; background: white;">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h2 class="block-title" style="margin-bottom: 0.5rem;">Der Markt <span class="highlight">existiert bereits</span></h2>
+            <p class="block-subtitle" style="text-align: justify;">Kombucha-Flaschen aus aller Welt zeigen: Der Trend ist real. Die Kategorie wächst. Deutschland ist bereit für lowlow.</p>
+        </div>
+
+        <div class="masonry-grid" style="margin-top: 3rem;">
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.32.58.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.33.08.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.33.25.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.33.43.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.34.13.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.34.25.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.34.37.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.34.55.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 16.35.26.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 17.31.35.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 17.31.44.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 17.32.06.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 17.32.35.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 17.32.48.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 17.33.06.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 17.33.15.png" alt="Kombucha Brands"></div>
+            <div class="masonry-item"><img src="Markbegleiter/Bildschirmfoto 2026-04-28 um 17.33.25.png" alt="Kombucha Brands"></div>
+        </div>
+    </section>
+
+    <!-- FULLBLEED IMAGE 2 -->
+    <section class="fullbleed" style="background-image: url('melisa-popanicic-COYz3xEfOdI-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2>LEBENDIG.<br>ECHT.<br>KRAFTVOLL.<br><span class="highlight">LOWLOW</span></h2>
+        </div>
+    </section>
+
+    <!-- MARKET DATA BLOCK -->
+    <section class="content-block">
+        <div class="block-content">
+            <h2 class="block-title">Der Markt <span class="highlight">Explodiert</span></h2>
+            <p class="block-subtitle">Das ist nicht Hype – das sind Fakten. 19,4% globales Wachstum. Deutschland ist völlig unterpenetrant.</p>
+
+            <div class="stats-grid">
+                <div class="stat">
+                    <div style="margin-bottom: 0.8rem;">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                            <circle cx="16" cy="16" r="12" stroke="var(--cyan)" stroke-width="2"/>
+                            <path d="M10 16h12M16 10v12" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-label">Global 2024</div>
+                    <div class="stat-number">$2,4B</div>
+                    <div class="stat-desc">Marktvolumen. 19,4% jährliches Wachstum.</div>
+                </div>
+                <div class="stat">
+                    <div style="margin-bottom: 0.8rem;">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                            <path d="M4 16c0-6.6 5.4-12 12-12s12 5.4 12 12-5.4 12-12 12S4 22.6 4 16Z" stroke="var(--orange)" stroke-width="2"/>
+                            <path d="M16 8v8l6 3" stroke="var(--orange)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-label">USA</div>
+                    <div class="stat-number">$1,6B</div>
+                    <div class="stat-desc">Größter Markt. 13,7% CAGR.</div>
+                </div>
+                <div class="stat">
+                    <div style="margin-bottom: 0.8rem;">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                            <path d="M4 8h24c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2Z" stroke="var(--yellow)" stroke-width="2"/>
+                            <path d="M4 10l12 8 12-8" stroke="var(--yellow)" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-label">Off-Trade</div>
+                    <div class="stat-number">+15,3%</div>
+                    <div class="stat-desc">Retail wächst am schnellsten.</div>
+                </div>
+                <div class="stat">
+                    <div style="margin-bottom: 0.8rem;">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                            <path d="M8 14c0-4.4 3.6-8 8-8s8 3.6 8 8" stroke="var(--cyan)" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M4 20c0-2.2 1.8-4 4-4h16c2.2 0 4 1.8 4 4" stroke="var(--cyan)" stroke-width="2"/>
+                            <circle cx="16" cy="10" r="2" fill="var(--cyan)"/>
+                        </svg>
+                    </div>
+                    <div class="stat-label">Europa</div>
+                    <div class="stat-number">€904M</div>
+                    <div class="stat-desc">UK dominiert. Deutschland: Leer.</div>
+                </div>
+                <div class="stat">
+                    <div style="margin-bottom: 0.8rem;">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                            <path d="M6 16c0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10-10 10-10-4.5-10-10Z" stroke="var(--orange)" stroke-width="2"/>
+                            <path d="M16 12v8M12 16h8" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-label">Health-Trend</div>
+                    <div class="stat-number">65%</div>
+                    <div class="stat-desc">Junge wählen fermentierte Getränke.</div>
+                </div>
+                <div class="stat">
+                    <div style="margin-bottom: 0.8rem;">
+                        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+                            <path d="M4 8h24c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V10c0-1.1.9-2 2-2Z" stroke="var(--yellow)" stroke-width="2"/>
+                            <path d="M8 14h16M8 18h12M8 22h14" stroke="var(--yellow)" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-label">Deutschland</div>
+                    <div class="stat-number">WHITE SPACE</div>
+                    <div class="stat-desc">First-Mover Vorteil JETZT.</div>
+                </div>
+            </div>
+
+            <div class="chart-block">
+                <h3 class="chart-title">
+                    <svg width="26" height="26" viewBox="0 0 32 32" fill="none" style="display: inline-block; vertical-align: middle; margin-right: 10px;">
+                        <!-- Background grid suggestion -->
+                        <g opacity="0.15">
+                            <line x1="4" y1="28" x2="28" y2="28" stroke="var(--cyan)" stroke-width="0.8"/>
+                            <line x1="4" y1="4" x2="4" y2="28" stroke="var(--cyan)" stroke-width="0.8"/>
+                        </g>
+                        <!-- Growth curve -->
+                        <path d="M6 24 Q10 18 14 12 Q18 8 22 4 Q26 2 28 2" stroke="var(--cyan)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Accent points -->
+                        <circle cx="14" cy="12" r="1.5" fill="var(--cyan)" opacity="0.6"/>
+                        <circle cx="22" cy="4" r="1.5" fill="var(--cyan)" opacity="0.6"/>
+                        <circle cx="28" cy="2" r="2" fill="var(--cyan)"/>
+                        <!-- Arrow indicator -->
+                        <path d="M26 1 L30 1 L28 5" fill="none" stroke="var(--cyan)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Globales Wachstum (2024-2031)
+                </h3>
+                <div class="chart-container">
+                    <canvas id="chartGrowth"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">Quelle: Grand View Research, Mordor Intelligence, Future Market Insights</p>
+            </div>
+
+            <div class="chart-block">
+                <h3 class="chart-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: inline-block; vertical-align: middle; margin-right: 10px;">
+                        <circle cx="12" cy="12" r="9" stroke="var(--orange)" stroke-width="2"/>
+                        <path d="M12 3v9M12 12L18 12" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M12 12L8 16" stroke="var(--orange)" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Regionale Marktanteile 2024
+                </h3>
+                <div class="chart-container">
+                    <canvas id="chartRegional"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">Quelle: Market Data Forecast, Grand View Research</p>
+            </div>
+
+            <div class="chart-block">
+                <h3 class="chart-title">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: inline-block; vertical-align: middle; margin-right: 10px;">
+                        <rect x="2" y="7" width="6" height="14" rx="1" stroke="var(--yellow)" stroke-width="2"/>
+                        <rect x="9" y="3" width="6" height="18" rx="1" stroke="var(--yellow)" stroke-width="2"/>
+                        <rect x="16" y="10" width="6" height="11" rx="1" stroke="var(--yellow)" stroke-width="2"/>
+                    </svg>
+                    Off-Trade Wachstum (CAGR %)
+                </h3>
+                <div class="chart-container">
+                    <canvas id="chartChannel"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">Quelle: Market Data Forecast, Grand View Research</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLBLEED IMAGE 3 -->
+    <section class="fullbleed" style="background-image: url('silas-baisch-XU6YMH8zVFg-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2>Reisen. Abenteuer. Leben.<br><span class="highlight">LOWLOW</span></h2>
+        </div>
+    </section>
+
+    <!-- MASONRY GRID - SPORTS & ACTION -->
+    <section class="masonry-grid">
+        <div class="masonry-item"><img src="brian-spurr-kwU2ntHvbfI-unsplash.jpg" alt="Water Sports"></div>
+        <div class="masonry-item"><img src="nils9three-ski-6947984_1920.jpg" alt="Skiing"></div>
+        <div class="masonry-item"><img src="jon-matthews-bda9rbqUNZQ-unsplash.jpg" alt="Biking"></div>
+        <div class="masonry-item"><img src="lisha-riabinina-stj-A6E6II8-unsplash.jpg" alt="Mountain"></div>
+        <div class="masonry-item"><img src="pexels-matteo-sarri-2152532088-32451903.jpg" alt="Action"></div>
+        <div class="masonry-item"><img src="pexels-pavel-danilyuk-8985594.jpg" alt="Sports"></div>
+        <div class="masonry-item"><img src="jared-rice-NTyBbu66_SI-unsplash.jpg" alt="Adventure"></div>
+        <div class="masonry-item"><img src="pexels-riccardo-vespa-594469796-17284183.jpg" alt="Extreme"></div>
+        <div class="masonry-item"><img src="pexels-tudor-sorin-2003800090-29042027.jpg" alt="Active"></div>
+        <div class="masonry-item"><img src="pexels-jordicosta-32658879.jpg" alt="Sport"></div>
+        <div class="masonry-item"><img src="pexels-jess-vide-4612307.jpg" alt="Active Lifestyle"></div>
+        <div class="masonry-item"><img src="melisa-popanicic-COYz3xEfOdI-unsplash.jpg" alt="Outdoor"></div>
+    </section>
+
+    <!-- FULLBLEED IMAGE 4 -->
+    <section class="fullbleed" style="background-image: url('negley-stockman-GYea2Dx6nKg-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2>Das ist <span class="highlight">LOWLOW</span></h2>
+            <p style="text-align: justify;">Nicht einfach Kombucha. Echte Fermentation. Klare Frische. Kein Alkohol..</p>
+        </div>
+    </section>
+
+    <!-- OPPORTUNITY BLOCK - NEW DESIGN -->
+    <section class="content-block" style="background: linear-gradient(180deg, white 0%, #f9f9f9 100%);">
+        <div class="block-content">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem; align-items: center;">
+
+                <div style="max-width: 520px;">
+                    <h2 class="block-title" style="margin-bottom: 1rem; font-size: 2rem; line-height: 1.15;">
+                        Die <span class="highlight">Gelegenheit</span> - Kategorie-<span class="highlight">Dominanz</span>
+                    </h2>
+
+                    <p style="font-size: 1.05rem; line-height: 1.55; color: #666; margin-bottom: 1rem; text-align: justify;">
+                        Kombucha ist in Deutschland noch nicht "owned". Das ist nicht Nachteil – das ist Vorteil. Wer jetzt mit echtem Produkt + echter Marke einsteigt, definiert die Kategorie für die nächsten 10 Jahre.
+                    </p>
+
+                    <p style="font-size: 1.05rem; line-height: 1.55; color: #666; margin-bottom: 0; text-align: justify;">
+                        <strong>Das ist nicht einfach Vertrieb.</strong> Das ist Category Leadership. Das ist Synergy-Erbe für Deutschland.
+                    </p>
+                </div>
+
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <img src="funtasticflorida.png" alt="lowlow Kombucha Flasche" style="width: auto; height: auto; max-height: 340px; max-width: 100%; object-fit: contain;">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLBLEED FINAL -->
+    <section class="fullbleed" style="background-image: url('pedro-monteiro-HfIex7qwTlI-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2>Der Raum ist da.<br>Jetzt braucht es die Marke.</h2>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+        <h2>lowlow ist kein weiterer Kombucha im Regal.<br><span style="background: linear-gradient(135deg, #FF1493, var(--orange), var(--yellow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">lowlow ist die Marke für den Moment, in dem Kombucha in Deutschland aus der Nische kommt.</span></h2>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 LOWLOW Kombucha GmbH</p>
+        <p style="margin-top: 1rem; opacity: 0.7;">ruediger.kuehnle@sealteamgreen.org</p>
+    </footer>
+
+    <!-- CHARTS -->
+    <script>
+        // Animation Loop Plugin
+        const animationLoopPlugin = {
+            afterDatasetsDraw(chart) {
+                if (chart.animationStatus === undefined) {
+                    chart.animationStatus = 0;
+                }
+                setTimeout(() => {
+                    chart.animate({ duration: chart.options.animation.duration });
+                }, chart.options.animation.duration + 500);
+            }
+        };
+
+        const chartGrowth = new Chart(document.getElementById('chartGrowth').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031'],
+                datasets: [{
+                    label: 'Marktgröße (Milliarden $)',
+                    data: [2.4, 2.86, 3.41, 4.07, 4.85, 5.79, 6.91, 8.24],
+                    borderColor: '#00D9FF',
+                    backgroundColor: 'rgba(0, 217, 255, 0.05)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#FF6B35'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 2500,
+                    easing: 'easeInOutQuart'
+                },
+                plugins: {
+                    legend: { labels: { font: { size: 12, weight: 'bold' } } },
+                    animationLoop: {}
+                },
+                scales: { y: { beginAtZero: true } }
+            },
+            plugins: [animationLoopPlugin]
+        });
+
+        new Chart(document.getElementById('chartRegional').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['USA', 'Europa', 'Asien', 'Rest'],
+                datasets: [{
+                    data: [1600, 904, 600, 300],
+                    backgroundColor: ['#00D9FF', '#FF6B35', '#FFD60A', '#ddd'],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 12, weight: 'bold' } } } } }
+        });
+
+        new Chart(document.getElementById('chartChannel').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031'],
+                datasets: [
+                    {
+                        label: 'Off-Trade Wachstum (CAGR %)',
+                        data: [15.3, 15.8, 16.2, 16.5, 16.8, 17.0, 17.1, 17.2],
+                        borderColor: '#00D9FF',
+                        backgroundColor: 'rgba(0, 217, 255, 0.2)',
+                        borderWidth: 5,
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 8,
+                        pointBackgroundColor: '#00D9FF',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 3000,
+                    easing: 'easeInOutQuart'
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            font: { size: 12, weight: 'bold' },
+                            padding: 20
+                        }
+                    },
+                    animationLoop: {}
+                },
+                scales: {
+                    y: {
+                        min: 15,
+                        max: 17.5,
+                        ticks: { callback: function(value) { return value + '%'; } }
+                    }
+                }
+            },
+            plugins: [animationLoopPlugin]
+        });
+
+        // LOGIN SYSTEM - Ein universeller Code für alle
+        const MASTER_CODE = 'lowlow8777'; // 🔑 Master Code
+
+        async function sendCode() {
+            const email = document.getElementById('email').value;
+            const statusMessage = document.getElementById('statusMessage');
+            const codeGroup = document.getElementById('codeGroup');
+            const emailBtn = document.getElementById('emailBtn');
+            const codeBtn = document.getElementById('codeBtn');
+
+            if (!email || !email.includes('@')) {
+                statusMessage.textContent = '❌ Bitte gib eine gültige Email ein';
+                statusMessage.className = 'message error';
+                return;
+            }
+
+            emailBtn.textContent = 'Wird gesendet...';
+            emailBtn.disabled = true;
+
+            try {
+                // Sende Email via Backend-API (sicher!)
+                const response = await fetch('/api/send-code', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                if (response.ok) {
+                    localStorage.setItem('currentEmail', email);
+                    statusMessage.textContent = '✅ Code wurde versendet!';
+                    statusMessage.className = 'message success';
+                    codeGroup.classList.add('active');
+                    emailBtn.style.display = 'none';
+                    codeBtn.style.display = 'block';
+                } else {
+                    statusMessage.textContent = '❌ Email konnte nicht versendet werden';
+                    statusMessage.className = 'message error';
+                    emailBtn.textContent = 'Code anfordern';
+                    emailBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                statusMessage.textContent = '❌ Ein Fehler ist aufgetreten';
+                statusMessage.className = 'message error';
+                emailBtn.textContent = 'Code anfordern';
+                emailBtn.disabled = false;
+            }
+        }
+
+        function verifyCode() {
+            const email = localStorage.getItem('currentEmail');
+            const code = document.getElementById('code').value;
+            const statusMessage = document.getElementById('statusMessage');
+
+            if (!code) {
+                statusMessage.textContent = '❌ Bitte gib einen Code ein';
+                statusMessage.className = 'message error';
+                return;
+            }
+
+            if (code === MASTER_CODE) {
+                localStorage.setItem('loggedIn_' + email, 'true');
+                statusMessage.textContent = '✅ Willkommen!';
+                statusMessage.className = 'message success';
+
+                setTimeout(() => {
+                    document.getElementById('loginModal').style.display = 'none';
+                }, 500);
+            } else {
+                statusMessage.textContent = '❌ Code ist falsch';
+                statusMessage.className = 'message error';
+            }
+        }
+
+        // Überprüfe beim Laden ob User schon eingeloggt ist
+        window.addEventListener('load', function() {
+            const storedEmail = localStorage.getItem('currentEmail');
+            if (storedEmail && localStorage.getItem('loggedIn_' + storedEmail) === 'true') {
+                document.getElementById('loginModal').style.display = 'none';
+            }
+        });
+
+        // Enter-Taste zum Senden/Verifizieren
+        document.getElementById('email').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendCode();
+        });
+
+        document.getElementById('code').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verifyCode();
+        });
+    </script>
+
+</body>
+</html>

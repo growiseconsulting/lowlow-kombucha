@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOWLOW Kombucha</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cyan: #00D9FF;
+            --magenta: #FF1493;
+            --orange: #FF6B35;
+            --yellow: #FFD60A;
+            --dark: #0A0E27;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: white;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HERO - NO HEADER */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-image: url('hero-lowlow.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .logo-hero {
+            max-width: 700px;
+            width: 90%;
+            height: auto;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            line-height: 1.3;
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease-out 0.2s both;
+            max-width: 1000px;
+            padding: 0 2rem;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 2;
+            display: none;
+        }
+
+        .hero h1 span {
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF1493 0%, var(--orange) 50%, var(--yellow) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            font-weight: 400;
+            line-height: 1.8;
+            animation: fadeIn 1.2s ease-out 0.4s both;
+            max-width: 700px;
+            padding: 0 2rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            color: white;
+            text-align: justify;
+            margin: 0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* FULL BLEED SECTIONS */
+        .fullbleed {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        .fullbleed::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .fullbleed-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            text-align: center;
+            max-width: 800px;
+            padding: 3rem;
+        }
+
+        .fullbleed h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .fullbleed p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* CONTENT BLOCKS - NO CORNERS */
+        .content-block {
+            width: 100%;
+            padding: 6rem 3rem;
+            background: #f8f8f8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .block-content {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .block-title {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            letter-spacing: -1px;
+        }
+
+        .block-title .highlight {
+            background: linear-gradient(135deg, var(--cyan), var(--orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .block-subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+        }
+
+        /* STATS GRID - MINIMAL */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .stat {
+            padding: 2.5rem 2rem;
+            background: white;
+            border-left: 4px solid var(--cyan);
+        }
+
+        .stat:nth-child(2) {
+            border-left-color: var(--orange);
+        }
+
+        .stat:nth-child(3) {
+            border-left-color: var(--yellow);
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat:nth-child(2) .stat-number {
+            color: var(--orange);
+        }
+
+        .stat:nth-child(3) .stat-number {
+            color: var(--yellow);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-desc {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* CHARTS */
+        .chart-block {
+            margin-top: 3rem;
+            padding: 2.5rem;
+            background: white;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 380px;
+        }
+
+        /* IMAGE GRID - RANDOM */
+        .image-grid {
+            width: 100%;
+            padding: 6rem 3rem;
+            background: white;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 0;
+        }
+
+        .grid-img {
+            width: 100%;
+            min-height: 400px;
+        }
+
+        .grid-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* OPPORTUNITY SECTION */
+        .opportunity {
+            background: linear-gradient(135deg, var(--dark) 0%, #1a1f3a 100%);
+            color: white;
+        }
+
+        .opportunity .block-title {
+            color: var(--cyan);
+        }
+
+        .opp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .opp-card {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid var(--cyan);
+        }
+
+        .opp-card:nth-child(2) {
+            border-left-color: var(--orange);
+        }
+
+        .opp-card:nth-child(3) {
+            border-left-color: var(--yellow);
+        }
+
+        .opp-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--cyan);
+        }
+
+        .opp-card p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* FINAL CTA SECTION */
+        .final-cta {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--orange) 100%);
+            color: white;
+            padding: 8rem 3rem;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .cta-white {
+            padding: 1.3rem 3.5rem;
+            background: white;
+            color: var(--orange);
+            border: none;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-white:hover {
+            transform: translateY(-3px);
+        }
+
+        /* LOGO ACCENT */
+        .logo-block {
+            width: 100%;
+            padding: 4rem 3rem;
+            background: white;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-medium {
+            max-width: 300px;
+            height: auto;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 3rem;
+            font-size: 0.9rem;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .fullbleed {
+                background-attachment: scroll;
+            }
+
+            .fullbleed h2 {
+                font-size: 2rem;
+            }
+
+            .fullbleed p {
+                font-size: 1rem;
+            }
+
+            .content-block {
+                padding: 3rem 1.5rem;
+            }
+
+            .block-title {
+                font-size: 2rem;
+            }
+
+            .image-grid {
+                grid-template-columns: 1fr;
+                padding: 2rem 0;
+            }
+
+            .grid-img {
+                min-height: 300px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO WITH LOGO -->
+    <section class="hero">
+        <img src="hero-lowlow.png" alt="lowlow Kombucha" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; z-index: 1;">
+        <h1><span>born from nature.</span><br>built for life.</h1>
+        <p>Kombucha ist eines der ältesten fermentierten Getränke der Welt.<br>Reich an Probiotika und Enzymen, die deinen Körper unterstützen.<br>lowlow bringt diese alte Weisheit in die Moderne – echt, roh, ungefiltert.</p>
+    </section>
+
+    <!-- FULLBLEED IMAGE 1 -->
+    <section class="fullbleed" style="background-image: url('gian-luca-pilia-KxQYNqp329Y-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2 style="font-size: 2.5rem; font-weight: 700; letter-spacing: -1px;">Das ist lowlow</h2>
+        </div>
+    </section>
+
+    <!-- CONTENT BLOCK - INSIGHT -->
+    <section class="content-block">
+        <div class="block-content">
+            <h2 class="block-title">warum <span class="highlight">jetzt?</span></h2>
+            <p class="block-subtitle">
+                Die USA haben gezeigt, wie groß Kombucha werden kann. Aus fermentiertem Tee wurde dort eine Milliarden-Kategorie. Europa zieht nach — aber Deutschland ist noch nicht emotional besetzt. Der Markt ist da, die Sehnsucht ist da, nur die Marke fehlt. lowlow schließt genau diese Lücke: Kombucha ohne Gesundheitsdogma, ohne Bio-Regal-Schwere, ohne erhobenen Zeigefinger. Stattdessen: Sommer, Surf-Vibe, echter Geschmack und eine neue alkoholfreie Alternative für den Alltag. Wer jetzt einsteigt, steigt nicht in ein fertiges Segment ein — sondern in den Moment, in dem die Kategorie gemacht wird.
+            </p>
+        </div>
+    </section>
+
+    <!-- FULLBLEED IMAGE 2 -->
+    <section class="fullbleed" style="background-image: url('melisa-popanicic-COYz3xEfOdI-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2>LEBENDIG.<br>ECHT.<br>KRAFTVOLL.</h2>
+        </div>
+    </section>
+
+    <!-- MARKET DATA BLOCK -->
+    <section class="content-block">
+        <div class="block-content">
+            <h2 class="block-title">Der Markt <span class="highlight">Explodiert</span></h2>
+            <p class="block-subtitle">Das ist nicht Hype – das sind Fakten. 19,4% globales Wachstum. Deutschland ist völlig unterpenetrant.</p>
+
+            <div class="stats-grid">
+                <div class="stat">
+                    <div class="stat-label">Global 2024</div>
+                    <div class="stat-number">$2,4B</div>
+                    <div class="stat-desc">Marktvolumen. 19,4% jährliches Wachstum.</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">USA</div>
+                    <div class="stat-number">$1,6B</div>
+                    <div class="stat-desc">Größter Markt. 13,7% CAGR.</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Off-Trade</div>
+                    <div class="stat-number">+15,3%</div>
+                    <div class="stat-desc">Retail wächst am schnellsten.</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Europa</div>
+                    <div class="stat-number">€904M</div>
+                    <div class="stat-desc">UK dominiert. Deutschland: Leer.</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Health-Trend</div>
+                    <div class="stat-number">65%</div>
+                    <div class="stat-desc">Junge wählen fermentierte Getränke.</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Deutschland</div>
+                    <div class="stat-number">WHITE SPACE</div>
+                    <div class="stat-desc">First-Mover Vorteil JETZT.</div>
+                </div>
+            </div>
+
+            <div class="chart-block">
+                <h3 class="chart-title">📈 Globales Wachstum (2024-2031)</h3>
+                <div class="chart-container">
+                    <canvas id="chartGrowth"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">Quelle: Grand View Research, Mordor Intelligence, Future Market Insights</p>
+            </div>
+
+            <div class="chart-block">
+                <h3 class="chart-title">🌍 Regionale Marktanteile 2024</h3>
+                <div class="chart-container">
+                    <canvas id="chartRegional"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">Quelle: Market Data Forecast, Grand View Research</p>
+            </div>
+
+            <div class="chart-block">
+                <h3 class="chart-title">🏪 Off-Trade Wachstum (CAGR %)</h3>
+                <div class="chart-container">
+                    <canvas id="chartChannel"></canvas>
+                </div>
+                <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">Quelle: Market Data Forecast, Grand View Research</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLBLEED IMAGE 3 -->
+    <section class="fullbleed" style="background-image: url('silas-baisch-XU6YMH8zVFg-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2>Reisen. Abenteuer. Leben.</h2>
+        </div>
+    </section>
+
+    <!-- IMAGE GRID - LIFESTYLE -->
+    <section class="image-grid">
+        <div class="grid-img"><img src="kyle-smith-LJDPStswOo0-unsplash.jpg" alt=""></div>
+        <div class="grid-img"><img src="kaylee-garrett-GaprWyIw66o-unsplash.jpg" alt=""></div>
+        <div class="grid-img"><img src="pexels-jess-vide-4612307.jpg" alt=""></div>
+        <div class="grid-img"><img src="jared-rice-NTyBbu66_SI-unsplash.jpg" alt=""></div>
+        <div class="grid-img"><img src="pexels-chrisbck-5867159.jpg" alt=""></div>
+        <div class="grid-img"><img src="pexels-darina-belonogova-7406676.jpg" alt=""></div>
+    </section>
+
+    <!-- FULLBLEED IMAGE 4 -->
+    <section class="fullbleed" style="background-image: url('negley-stockman-GYea2Dx6nKg-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2>Das ist LOWLOW</h2>
+            <p>Nicht einfach Kombucha. Echte Fermentation. Klare Frische. Kein Alkohol..</p>
+        </div>
+    </section>
+
+    <!-- OPPORTUNITY BLOCK - NEW DESIGN -->
+    <section class="content-block" style="background: linear-gradient(180deg, white 0%, #f9f9f9 100%);">
+        <div class="block-content">
+            <h2 class="block-title">die <span class="highlight">gelegenheit</span></h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; align-items: center;">
+                <div>
+                    <h3 style="font-size: 2rem; font-weight: 700; line-height: 1.3; margin-bottom: 1.5rem; color: #0A0E27;">
+                        kategorie-<span style="background: linear-gradient(135deg, #FF1493, var(--orange), var(--yellow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">dominanz</span>
+                    </h3>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 2rem;">
+                        Kombucha ist in Deutschland noch nicht "owned". Das ist nicht Nachteil – das ist Vorteil. Wer jetzt mit echtem Produkt + echter Marke einsteigt, definiert die Kategorie für die nächsten 10 Jahre.
+                    </p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 2rem;">
+                        <strong>Das ist nicht einfach Vertrieb.</strong> Das ist Category Leadership. Das ist Synergy-Erbe für Deutschland.
+                    </p>
+                </div>
+                <div style="background: linear-gradient(135deg, #FF1493, var(--orange), var(--yellow)); padding: 3rem; color: white; text-align: center;">
+                    <p style="font-size: 2.5rem; font-weight: 900; line-height: 1.2;">
+                        5-10<br><span style="font-size: 1.2rem; font-weight: 400;">Jahre Marktführerschaft<br>wenn du JETZT startest</span>
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-top: 4rem; padding-top: 4rem; border-top: 1px solid #eee;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem;">
+                    <div>
+                        <h4 style="font-size: 1.3rem; font-weight: 700; color: var(--cyan); margin-bottom: 1rem;">HEALTHY</h4>
+                        <p style="color: #666; line-height: 1.7;">0 → 1.000+ Regale<br>in 18-24 Monaten</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.3rem; font-weight: 700; color: var(--orange); margin-bottom: 1rem;">ABENTEUER</h4>
+                        <p style="color: #666; line-height: 1.7;">Break-even Jahr 3<br>Profit Jahr 2 (Best Case)</p>
+                    </div>
+                    <div>
+                        <h4 style="font-size: 1.3rem; font-weight: 700; color: var(--yellow); margin-bottom: 1rem;">LEBEN</h4>
+                        <p style="color: #666; line-height: 1.7;">AT/CH/Skandinavien ready<br>nach Deutschland-Erfolg</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULLBLEED FINAL -->
+    <section class="fullbleed" style="background-image: url('pedro-monteiro-HfIex7qwTlI-unsplash.jpg');">
+        <div class="fullbleed-content">
+            <h2>Der Raum ist da.<br>Jetzt braucht es die Marke.</h2>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+        <h2>lowlow ist kein weiterer Kombucha im Regal.<br><span style="background: linear-gradient(135deg, #FF1493, var(--orange), var(--yellow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">lowlow ist die Marke für den Moment, in dem Kombucha in Deutschland aus der Nische kommt.</span></h2>
+        <p>du hast kontingent gesichert. die marke ist bereit. der markt ist leer. lass uns das bauen.</p>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 LOWLOW Kombucha GmbH</p>
+        <p style="margin-top: 1rem; opacity: 0.7;">ruediger.kuehnle@sealteamgreen.org</p>
+    </footer>
+
+    <!-- CHARTS -->
+    <script>
+        new Chart(document.getElementById('chartGrowth').getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: ['2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031'],
+                datasets: [{
+                    label: 'Marktgröße (Milliarden $)',
+                    data: [2.4, 2.86, 3.41, 4.07, 4.85, 5.79, 6.91, 8.24],
+                    borderColor: '#00D9FF',
+                    backgroundColor: 'rgba(0, 217, 255, 0.05)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointBackgroundColor: '#FF6B35'
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 12, weight: 'bold' } } } }, scales: { y: { beginAtZero: true } } }
+        });
+
+        new Chart(document.getElementById('chartRegional').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['USA', 'Europa', 'Asien', 'Rest'],
+                datasets: [{
+                    data: [1600, 904, 600, 300],
+                    backgroundColor: ['#00D9FF', '#FF6B35', '#FFD60A', '#ddd'],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 12, weight: 'bold' } } } } }
+        });
+
+        new Chart(document.getElementById('chartChannel').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Off-Trade', 'On-Trade', 'Online'],
+                datasets: [{
+                    label: 'Growth %',
+                    data: [15.3, 10.2, 22.5],
+                    backgroundColor: ['#00D9FF', '#FF6B35', '#FFD60A']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { font: { size: 12, weight: 'bold' } } } }, scales: { y: { beginAtZero: true } } }
+        });
+    </script>
+
+</body>
+</html>
