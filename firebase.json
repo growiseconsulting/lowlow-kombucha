@@ -1,0 +1,35 @@
+{
+  "hosting": {
+    "public": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "functions/",
+      ".git/",
+      ".gitignore",
+      "api/",
+      "DEPLOYMENT.md",
+      "VERSIONS.md",
+      "VIDEO-STORYBOARD.md",
+      "*.md",
+      "package.json",
+      "vercel.json",
+      ".env*"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/send-code",
+        "function": "sendCode"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": {
+    "runtime": "nodejs18",
+    "region": ["europe-west1"]
+  }
+}

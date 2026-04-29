@@ -1,0 +1,15 @@
+{
+  "name": "lowlow-kombucha-functions",
+  "description": "Cloud Functions for lowlow Kombucha",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-functions": "^4.4.1",
+    "firebase-admin": "^11.11.1",
+    "node-fetch": "^2.6.11"
+  }
+}
